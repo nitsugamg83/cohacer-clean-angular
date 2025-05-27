@@ -1,0 +1,15 @@
+<section *ngIf="visible" #licenciaturasSection class="licenciaturas-section">
+  <h2>Licenciaturas</h2>
+  <div class="licenciaturas-grid">
+    <div *ngFor="let carrera of licenciaturas" class="licenciatura-item">
+      <div class="icono">
+        <img [src]="carrera.imagen" [alt]="carrera.nombre" />
+      </div>
+      <div class="nombre">{{ carrera.nombre }}</div>
+    </div>
+  </div>
+  <div class="mensaje-x">
+    <img src="assets/times.png" alt="No aplica" />
+    <span>Área de la salud física o emocional no aplica para esta modalidad</span>
+  </div>
+</section>

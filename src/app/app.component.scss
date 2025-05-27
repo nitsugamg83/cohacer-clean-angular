@@ -1,0 +1,8 @@
+.main-container {
+  padding: 1rem;
+  margin-top: 0;
+
+  &.con-header {
+    margin-top: 100px; // o la altura real del header
+  }
+}

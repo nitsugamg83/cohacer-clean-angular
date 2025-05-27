@@ -1,0 +1,38 @@
+<section class="chat-container">
+  <h2>¿Tienes dudas? Pregúntale a Esmi</h2>
+
+  <div class="chat-layout">
+    <!-- Chat principal -->
+    <div class="chat-box">
+      <div class="chat-message" *ngFor="let msg of messages">
+        <img *ngIf="msg.sender === 'esmi'" src="/assets/esmi.webp" alt="Esmi" />
+        <p [class.user]="msg.sender === 'user'">{{ msg.text }}</p>
+      </div>
+
+      <!-- Loader -->
+      <div class="chat-loader" *ngIf="loading">
+        <span class="paw">🐾</span><span class="paw">🐾</span><span class="paw">🐾</span><span class="paw">🐾</span><span class="paw">🐾</span>
+      </div>
+
+      <!-- Campo de entrada -->
+      <form (submit)="sendMessage(); $event.preventDefault()" *ngIf="!loading">
+        <input
+          type="text"
+          [(ngModel)]="message"
+          name="chatInput"
+          placeholder="Escribe tu pregunta aquí..."
+          required
+        />
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+
+    <!-- Sugerencias -->
+    <aside class="chat-suggestions">
+      <h3>Sugerencias</h3>
+      <button *ngFor="let s of suggestions" (click)="sendSuggestion(s)">
+        {{ s }}
+      </button>
+    </aside>
+  </div>
+</section>

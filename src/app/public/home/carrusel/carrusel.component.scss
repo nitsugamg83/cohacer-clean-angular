@@ -1,0 +1,173 @@
+.carusel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.carusel-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 8px solid #bcbcbc;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  gap: 2rem;
+  background: white;
+  width: 100%;
+  max-width: 1240px;
+  height: 300px;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  .imagen {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      height: 100%;
+      width: auto;
+      max-width: 100%;
+      object-fit: cover;
+      border-radius: 1.2rem;
+      transition: opacity 0.5s ease-in-out;
+      opacity: 1;
+    }
+
+    .nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      border: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 0.3rem 0.7rem;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      user-select: none;
+      z-index: 2;
+    }
+
+    .prev {
+      left: -1rem;
+    }
+
+    .next {
+      right: -1rem;
+    }
+  }
+
+  .texto {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    h2 {
+      color: #6d6d6d;
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: #757575;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta {
+      background: #fbbc04;
+      border: none;
+      color: #444;
+      font-weight: bold;
+      padding: 0.75rem 1.5rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      font-size: 1rem;
+      width: fit-content;
+    }
+
+    .linea {
+      margin-top: 1rem;
+      height: 4px;
+      background-color: #fbbc04;
+      border-radius: 4px;
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
+
+/* Solución encapsulada para Angular con selector válido */
+:host ::ng-deep .carusel-box.invertido {
+  flex-direction: row-reverse !important;
+}
+
+@media (max-width: 768px) {
+  .carusel-box {
+    flex-direction: column;
+    height: auto;
+    text-align: center;
+
+    .imagen {
+      order: 1;
+      height: auto;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+
+      .nav {
+        top: auto;
+        bottom: 10px;
+        transform: none;
+        font-size: 1.2rem;
+        padding: 0.2rem 0.6rem;
+      }
+
+      .prev {
+        left: 1rem;
+      }
+
+      .next {
+        right: 1rem;
+      }
+    }
+
+    .texto {
+      order: 2;
+      align-items: center;
+
+      h2 {
+        font-size: 1.3rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+      }
+
+      .cta {
+        font-size: 0.95rem;
+        padding: 0.6rem 1.2rem;
+      }
+
+      .linea {
+        margin: 1rem auto 0;
+        width: 80px;
+      }
+    }
+  }
+}

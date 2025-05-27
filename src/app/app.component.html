@@ -1,0 +1,4 @@
+<app-header *ngIf="mostrarHeader"></app-header>
+<main class="main-container" [class.con-header]="mostrarHeader">
+  <router-outlet></router-outlet>
+</main>

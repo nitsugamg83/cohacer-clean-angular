@@ -1,0 +1,115 @@
+.programas-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: 'Open Sans', sans-serif;
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+
+    button {
+      flex: 1;
+      background: #333;
+      color: #fff;
+      padding: 1rem;
+      border: 2px solid #000;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      text-align: center;
+
+      small {
+        display: block;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
+      }
+
+      &.active {
+        background: #666;
+      }
+    }
+  }
+
+  .contenido {
+    padding: 1rem;
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin: 2rem 0 1rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 2rem 0 1rem;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+      line-height: 1.5;
+    }
+
+    ul {
+      list-style: disc;
+      padding-left: 1.5rem;
+      margin-top: 1rem;
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    img {
+      max-width: 300px;
+      display: block;
+      margin: 2rem auto;
+    }
+
+    .banner {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 2rem;
+    }
+
+    .rvoe-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .rvoe-texto {
+      flex: 2;
+    }
+
+    .rvoe-imagen {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+
+      img {
+        max-width: 320px;
+        height: auto;
+      }
+    }
+  }
+
+  //  Banner inferior alineado
+  .programas-banner-inferior {
+    width: 100%;
+    margin-top: 3rem;
+
+    img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+}

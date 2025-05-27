@@ -1,0 +1,18 @@
+<div class="onboarding-overlay" *ngIf="visible">
+  <div class="tooltip-box" [ngStyle]="{ top: tooltipPosition.top + 'px', left: tooltipPosition.left + 'px' }"
+       [class.arrow-left]="tooltipSide === 'left'"
+       [class.arrow-right]="tooltipSide === 'right'">
+    <div class="onboarding-card">
+      <h2>{{ currentStep?.title }}</h2>
+      <p>{{ currentStep?.description }}</p>
+
+      <div class="actions">
+        <button *ngFor="let action of currentStep?.action"
+                (click)="currentStep?.actionHandler(action, currentStep, this)">
+          {{ action }}
+        </button>
+      </div>
+    </div>
+    <div class="arrow"></div>
+  </div>
+</div>

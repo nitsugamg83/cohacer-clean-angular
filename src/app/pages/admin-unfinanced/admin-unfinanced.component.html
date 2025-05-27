@@ -1,0 +1,50 @@
+<div *ngIf="loading" class="loading">{{ loading }}</div>
+<div *ngIf="error" class="error">Error: {{ error }}</div>
+
+<div *ngIf="!loading && !error">
+  <h1>Usuarios sin financiamiento</h1>
+
+  <div *ngIf="enrolls.length === 0">
+    <p>No hay usuarios sin financiamiento.</p>
+  </div>
+
+  <div class="cards">
+    <div *ngFor="let enroll of enrolls" class="card">
+      <h3>{{ enroll.user?.name }}</h3>
+      <p><strong>Empresa:</strong> {{ enroll.company?.name }}</p>
+      <p><strong>Carrera:</strong> {{ enroll.career?.name }}</p>
+      <p><strong>Email:</strong> {{ enroll.user?.email }}</p>
+      <button (click)="onEdit(enroll)">Editar</button>
+    </div>
+  </div>
+
+  <div *ngIf="selectedEnroll" class="modal">
+    <form (ngSubmit)="onSubmit()" #finForm="ngForm">
+      <h3>Editar financiamiento</h3>
+
+      <label>Monto visible para el usuario:</label>
+      <input type="number" [(ngModel)]="selectedEnroll.financial.visibleToUser" name="visibleToUser" required />
+
+      <label>Descuento:</label>
+      <input type="number" [(ngModel)]="selectedEnroll.financial.discount" name="discount" required />
+
+      <label>Candado inscripción:</label>
+      <input type="number" [(ngModel)]="selectedEnroll.financial.locks.inscription" name="inscription" />
+
+      <label>Candado clases:</label>
+      <input type="number" [(ngModel)]="selectedEnroll.financial.locks.classes" name="classes" />
+
+      <label>Candado simulaciones:</label>
+      <input type="number" [(ngModel)]="selectedEnroll.financial.locks.simulations" name="simulations" />
+
+      <label>Candado exámenes:</label>
+      <input type="number" [(ngModel)]="selectedEnroll.financial.locks.tests" name="tests" />
+
+      <label>Candado certificación:</label>
+      <input type="number" [(ngModel)]="selectedEnroll.financial.locks.certification" name="certification" />
+
+      <button type="submit">Guardar</button>
+      <button type="button" (click)="selectedEnroll = null">Cancelar</button>
+    </form>
+  </div>
+</div>

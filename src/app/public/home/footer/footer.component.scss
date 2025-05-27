@@ -1,0 +1,97 @@
+.footer {
+  padding: 2rem;
+  background: #fff;
+  color: #333;
+  font-family: 'Open Sans', sans-serif;
+
+  .footer-top {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    .logo {
+      height: 150px;
+      margin-bottom: 1rem;
+    }
+
+    .footer-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+
+      a {
+        font-size: 3.4rem;
+        color: #1d1d1d;
+        transition: color 0.3s;
+
+        &:hover {
+          color: #fbbc04;
+        }
+      }
+    }
+  }
+
+  .footer-addresses {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+
+    .address-card {
+      background: #f7f7f7;
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      max-width: 280px;
+      text-align: left;
+
+      h4 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #555;
+        line-height: 1.4;
+      }
+
+      a {
+        display: inline-block;
+        margin-top: 0.5rem;
+        color: #000;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .footer-bottom {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #ccc;
+
+    a {
+      margin: 0 1rem;
+      color: #605e5e;
+      text-decoration: underline;
+
+      &:hover {
+        color: #fbbc04;
+      }
+    }
+
+    span {
+      display: block;
+      margin-top: 0.5rem;
+      color: #888;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+<div class="layout">
+  <aside [class.closed]="!sidebarOpen">
+    <div class="logo">
+      <img src="/assets/icon.png" alt="Logo" />
+      <span *ngIf="sidebarOpen">COHACER</span>
+    </div>
+
+    <nav class="sidebar-nav" *ngFor="let group of (groupedMenu | keyvalue)">
+      <div *ngIf="group.value.length > 0" class="group" [class.hidden]="!sidebarOpen">
+        {{ group.key }}
+      </div>
+      <a *ngFor="let item of group.value" [routerLink]="item.href">
+        <i class="material-symbols-outlined">{{ item.icon }}</i>
+        <span class="label" *ngIf="sidebarOpen">{{ item.text }}</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="toggle" (click)="toggleSidebar()">☰</button>
+      <div class="topbar-actions">
+        <button class="logout-button" (click)="logout()">Cerrar sesión</button>
+        <img class="avatar" [src]="user?.photo || '/assets/default-avatar.png'" alt="Avatar" />
+      </div>
+    </header>
+    <section class="content">
+      <router-outlet></router-outlet>
+    </section>
+  </div>
+
+  <cohacer-onboarding></cohacer-onboarding>
+</div>

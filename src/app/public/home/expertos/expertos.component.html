@@ -1,0 +1,15 @@
+<section class="expertos">
+  <div class="expertos-header">
+    <h2>Expertos COHACER</h2>
+    <p>Asesores y líderes comerciales capacitados para orientarte.</p>
+  </div>
+
+  <div class="expertos-grid">
+    <div class="experto" *ngFor="let e of expertos">
+      <img [src]="e.imagen" [alt]="e.nombre" />
+      <h3>{{ e.nombre }}</h3>
+      <p class="telefono">{{ e.telefono }}</p>
+      <p class="ciudad">{{ e.ciudad }}</p>
+    </div>
+  </div>
+</section>

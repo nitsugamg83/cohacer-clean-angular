@@ -1,0 +1,60 @@
+<div class="login-container">
+  <h1>Iniciar sesión</h1>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="loading" class="loading">{{ loading }}</div>
+
+  <form *ngIf="step === 'email'" (ngSubmit)="submitEmail()">
+    <label for="email">Correo electrónico</label>
+    <input type="email" [(ngModel)]="email" name="email" id="email" required />
+    <button type="submit">Continuar</button>
+  </form>
+
+  <div *ngIf="step !== 'email'" class="user-summary">
+    <img [src]="user?.photo || '/assets/default-avatar.png'" alt="Avatar" />
+    <h2>{{ user?.name }}</h2>
+  </div>
+
+  <!-- PASSWORD LOGIN -->
+  <form *ngIf="step === 'password'" (ngSubmit)="login()">
+    <label for="password">Contraseña</label>
+    <div class="password-field">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        [(ngModel)]="password"
+        name="password"
+        id="password"
+        required
+      />
+      <button type="button" (click)="togglePassword()">
+        {{ showPassword ? '🙈' : '👁️' }}
+      </button>
+    </div>
+    <button type="submit">Entrar</button>
+    <button type="button" (click)="sendOTP()">¿Usar código?</button>
+    <button type="button" (click)="backTo('email')">← Cambiar correo</button>
+  </form>
+
+  <!-- OTP LOGIN -->
+  <form *ngIf="step === 'otp'" (ngSubmit)="verifyOTP()">
+    <label for="otp">Código recibido</label>
+    <input type="text" [(ngModel)]="otp" name="otp" id="otp" required />
+    <div *ngIf="requestNewPassword" class="password-field">
+      <label for="password">Nueva contraseña</label>
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        [(ngModel)]="password"
+        name="password"
+        id="password"
+        required
+      />
+      <button type="button" (click)="togglePassword()">
+        {{ showPassword ? '🙈' : '👁️' }}
+      </button>
+    </div>
+    <button type="submit">Entrar</button>
+    <button type="button" (click)="sendOTP()">Reenviar código</button>
+    <button type="button" *ngIf="allowPassword" (click)="backTo('password')">← Usar contraseña</button>
+    <button type="button" (click)="backTo('email')">← Cambiar correo</button>
+  </form>
+</div>

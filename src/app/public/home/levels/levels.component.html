@@ -1,0 +1,58 @@
+<section class="levels">
+  <div class="level" [class.active]="selectedLevel === 'bachillerato'" (click)="selectLevel('bachillerato')">
+    Bachillerato<br><small>Acuerdo 286</small>
+  </div>
+  <div class="level" [class.active]="selectedLevel === 'licenciatura'" (click)="selectLevel('licenciatura')">
+    Licenciatura<br><small>Acuerdo 286</small>
+  </div>
+  <div class="level" [class.active]="selectedLevel === 'maestria'" (click)="selectLevel('maestria')">
+    Maestría<br><small>RVOE</small>
+  </div>
+</section>
+
+<section class="requirements">
+  <h2>Requisitos</h2>
+  <div class="cards">
+
+    <div *ngIf="selectedLevel === 'bachillerato'" class="card">
+      <img src="/assets/18+.png" alt="Mayor de 18 años">
+      <p>Mayor de 18 años de edad.</p>
+    </div>
+
+    <ng-container *ngIf="selectedLevel === 'licenciatura'">
+      <div class="card">
+        <img src="/assets/25+.png" alt="Mayor de 25 años">
+        <p>Mayor de 25 años</p>
+      </div>
+      <div class="card">
+        <img src="/assets/experiencia.png" alt="Experiencia laboral">
+        <p>Al menos 3 años de experiencia laboral</p>
+      </div>
+      <div class="card">
+        <img src="/assets/certificado.png" alt="Certificado de bachillerato">
+        <p>Certificado de bachillerato</p>
+      </div>
+      <div class="card">
+        <img src="/assets/creditos.png" alt="Créditos académicos">
+        <p>50% de créditos académicos<br><small>Extra para reguladas</small></p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="selectedLevel === 'maestria'">
+      <div class="card">
+        <img src="/assets/titulo.png" alt="Título profesional">
+        <p>Título profesional con más de 1 año y 3 meses</p>
+      </div>
+      <div class="card">
+        <img src="/assets/maestria-conocimientos.png" alt="Administración y gestión">
+        <p>Conocimientos y experiencia en administración, gestión y operación de negocios</p>
+      </div>
+    </ng-container>
+
+  </div>
+  <ng-container *ngIf="selectedLevel === 'licenciatura'">
+    <app-licenciaturas></app-licenciaturas>
+  </ng-container>
+
+
+</section>

@@ -1,0 +1,37 @@
+<div class="costos-container">
+  <div class="tabs">
+    <button [class.active]="selected === 'bachillerato'" (click)="select('bachillerato')">
+      Bachillerato<br /><small>Acuerdo 286</small>
+    </button>
+    <button [class.active]="selected === 'licenciatura'" (click)="select('licenciatura')">
+      Licenciatura<br /><small>Acuerdo 286</small>
+    </button>
+    <button [class.active]="selected === 'maestria'" (click)="select('maestria')">
+      Maestría<br /><small>RVOE</small>
+    </button>
+  </div>
+
+  <h2>Costos</h2>
+  <p>
+    Puedes iniciar tu proceso de la manera más sencilla y diferir en un plan de pagos creado a tu disponibilidad
+    y calendario de evaluación de la SEP ¡Además cuentas con la garantía para tus evaluaciones estipulada en tu contrato!
+  </p>
+
+  <div class="costo-card" *ngIf="selected === 'bachillerato'">
+    <h3>Bachillerato</h3>
+    <p class="sub">Acuerdo SEP 286</p>
+    <p class="monto">$9,000.00 MXN</p>
+  </div>
+
+  <div class="costo-card" *ngIf="selected === 'licenciatura'">
+    <h3>Titulación por <br />Experiencia Laboral</h3>
+    <p class="sub">Acuerdo SEP 286</p>
+    <p class="monto">$53,000.00 MXN</p>
+  </div>
+
+  <div class="costo-card" *ngIf="selected === 'maestria'">
+    <h3>Maestría</h3>
+    <p class="sub">RVOE</p>
+    <p class="monto">$69,500.00 MXN</p>
+  </div>
+</div>

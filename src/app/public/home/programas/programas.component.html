@@ -1,0 +1,58 @@
+<div class="programas-container">
+  <div class="tabs">
+    <button [class.active]="selected === 'bachillerato'" (click)="select('bachillerato')">
+      Bachillerato<br /><small>Acuerdo 286</small>
+    </button>
+    <button [class.active]="selected === 'licenciatura'" (click)="select('licenciatura')">
+      Licenciatura<br /><small>Acuerdo 286</small>
+    </button>
+    <button [class.active]="selected === 'maestria'" (click)="select('maestria')">
+      Maestría<br /><small>RVOE</small>
+    </button>
+  </div>
+
+  <div class="contenido" *ngIf="selected === 'bachillerato' || selected === 'licenciatura'">
+    <h2>En apego al Acuerdo 286</h2>
+    <p>Un proceso personalizado creado con la última tecnología en capacitación para profesionistas.</p>
+    <p>Garantía y seguridad avaladas por la Secretaría de Educación Pública (SEP).</p>
+    <p>COHACER es una sede de aplicación y centro de formación autorizado.</p>
+    <img src="assets/actaNac.webp" alt="Certificado" />
+  </div>
+
+  <div class="contenido" *ngIf="selected === 'maestria'">
+    <img src="assets/maestria-banner.png" alt="Maestría Banner" class="banner" />
+
+    <div class="rvoe-row">
+      <div class="rvoe-texto">
+        <h2>Plan de estudios</h2>
+        <p>
+          COHACER en alianza con su universidad hermana ICEM ofrecen la <br />
+          MAESTRÍA EN DIRECCIÓN DE NEGOCIOS con RVOE propio 20221164
+        </p>
+
+        <h3>Modelos, métodos, estrategias y herramientas que dominarás</h3>
+        <ul>
+          <li>Gestión empresarial y desarrollo organizacional</li>
+          <li>Big Data y gestión financiera integral</li>
+          <li>Planeación prospectiva estratégica empresarial</li>
+          <li>Gestión y desarrollo integral del talento humano</li>
+          <li>Gestión de la producción, cadena de valor y productividad</li>
+          <li>Inteligencia de negocios, innovación y transformación digital</li>
+          <li>Emprendimiento y nuevos modelos de negocios</li>
+          <li>Posicionamiento de mercado</li>
+          <li>Neuro liderazgo y Coaching empresarial</li>
+          <li>Responsabilidad social e imagen corporativa</li>
+          <li>Psicología organizacional y sistemas integrales de gestión</li>
+          <li>La IA en las organizaciones y aplicación en los negocios</li>
+        </ul>
+      </div>
+      <div class="rvoe-imagen">
+        <img src="assets/rvoeH.png" alt="RVOE" />
+      </div>
+    </div>
+  </div>
+
+  <div class="programas-banner-inferior">
+    <img src="assets/titulacion-con-intencion-banner.png" alt="Titulación con Intención" />
+  </div>
+</div>

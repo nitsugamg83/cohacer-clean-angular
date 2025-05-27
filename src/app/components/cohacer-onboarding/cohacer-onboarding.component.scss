@@ -1,0 +1,83 @@
+.onboarding-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.tooltip-box {
+  position: absolute;
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+
+  &.arrow-right {
+    flex-direction: row;
+
+    .arrow {
+      left: -10px;
+      position: absolute;
+      top: 40%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-right: 10px solid white;
+    }
+  }
+
+  &.arrow-left {
+    flex-direction: row-reverse;
+
+    .arrow {
+      right: -10px;
+      position: absolute;
+      top: 40%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-left: 10px solid white;
+    }
+  }
+}
+
+.onboarding-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  max-width: 320px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  text-align: left;
+
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+
+    button {
+      background-color: #fbbc04;
+      border: none;
+      border-radius: 1rem;
+      padding: 0.4rem 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+}

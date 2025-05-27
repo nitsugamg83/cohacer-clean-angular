@@ -1,0 +1,37 @@
+<div class="carusel-container">
+
+  <!-- PRIMER CARRUSEL: Imagen izquierda, texto derecha -->
+  <div class="carusel-box">
+    <div class="imagen">
+      <button class="nav prev" (click)="prev(1)">&lt;</button>
+      <img [src]="carrusel1Imgs[carrusel1Index]" alt="Testimonio" />
+      <button class="nav next" (click)="next(1)">&gt;</button>
+    </div>
+    <div class="texto">
+      <h2>¡Logros obtenidos con dedicación y esfuerzo!</h2>
+      <p>
+        Un sistema en línea desarrollado especialmente para profesionistas activos.
+        Innovación constante. Metas aseguradas y acompañamiento durante todo el proceso.
+      </p>
+      <button class="cta" (click)="abrirVideo()">Ver testimonios</button>
+    </div>
+  </div>
+
+  <!-- SEGUNDO CARRUSEL: Texto izquierda, imagen derecha -->
+  <div class="carusel-box">
+    <div class="texto">
+      <h2>COHACER premiado por la mejor atención y excelencia en servicio</h2>
+      <p>
+        Centros de evaluación y empresas reconocen a COHACER por su estructura eficaz y
+        eficiente de sus procesos académicos y atención al cliente.
+      </p>
+      <div class="linea"></div>
+    </div>
+    <div class="imagen">
+      <button class="nav prev" (click)="prev(2)">&lt;</button>
+      <img [src]="carrusel2Imgs[carrusel2Index]" alt="Premio" />
+      <button class="nav next" (click)="next(2)">&gt;</button>
+    </div>
+  </div>
+
+</div>
