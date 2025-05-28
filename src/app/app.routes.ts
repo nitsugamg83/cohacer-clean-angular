@@ -33,7 +33,13 @@ export const routes: Routes = [
         path: 'administracion/ligasdepago',
         loadComponent: () =>
           import('./pages/admin-payment-links/admin-payment-links.component').then(m => m.AdminPaymentLinksComponent)
+      },
+      {
+        path: 'evaluadora/iutmrevision',
+        loadComponent: () =>
+          import('./pages/evaluadora-revision/evaluadora-revision.component').then(m => m.AdminEvaluadoraRevisionComponent)
       }
+
 
     ]
   }

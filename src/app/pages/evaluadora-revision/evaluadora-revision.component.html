@@ -1,0 +1,39 @@
+<div *ngIf="loading" class="loading">Cargando datos...</div>
+<div *ngIf="error" class="error">Error: {{ error }}</div>
+
+<div *ngIf="!loading && !error">
+  <h1>Ligas de pago</h1>
+
+  <div class="search-container">
+    <input [(ngModel)]="searchTerm" placeholder="Buscar..." />
+    <span class="search-icon" (click)="applyFilter()">🔍</span>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    Mostrando {{ (currentPage - 1) * itemsPerPage + 1 }}–{{ Math.min(currentPage * itemsPerPage, filteredData.length) }}
+    de {{ filteredData.length }}
+    <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+  </div>
+
+  <div class="cards">
+    <div *ngFor="let item of paginatedData" class="card">
+      <p><strong>Nombre:</strong> {{ item.user?.name }}</p>
+      <p><strong>Carrera:</strong> {{ item.career?.name }}</p>
+      <div class="actions">
+        <button (click)="descargarPDF(item)">Descargar</button>
+        <button (click)="aceptar(item)">Aceptar</button>
+        <button (click)="mostrarRechazo(item)">Rechazar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" *ngIf="rejectItem">
+    <form (ngSubmit)="rechazar()">
+      <h3>Escriba su nota de rechazo</h3>
+      <textarea [(ngModel)]="comment" name="comment" required></textarea>
+      <button type="submit">Enviar</button>
+      <button type="button" (click)="rejectItem = null">Cancelar</button>
+    </form>
+  </div>
+</div>
