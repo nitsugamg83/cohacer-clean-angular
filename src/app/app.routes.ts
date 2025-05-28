@@ -28,7 +28,13 @@ export const routes: Routes = [
         path: 'administracion/financiar',
         loadComponent: () =>
           import('./pages/admin-unfinanced/admin-unfinanced.component').then(m => m.AdminUnfinancedComponent)
+      },
+      {
+        path: 'administracion/ligasdepago',
+        loadComponent: () =>
+          import('./pages/admin-payment-links/admin-payment-links.component').then(m => m.AdminPaymentLinksComponent)
       }
+
     ]
   }
 ];
