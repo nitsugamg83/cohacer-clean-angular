@@ -76,6 +76,7 @@ export class AppLayoutComponent implements OnInit {
 
       { icon: 'contact_page', text: 'Curriculum vitae', href: '/app/cv', group: 'CV' },
       { icon: 'user_attributes', text: 'Revisar Curriculum', href: '/app/revisarCurriculum', group: 'CV' },
+      { icon: 'demography', text: 'Crear Caso práctico', href: '/app/crear-casopractico', group: 'Caso práctico' },
       { icon: 'demography', text: 'Caso práctico', href: '/app/casopractico', group: 'Caso práctico' },
       { icon: 'demography', text: 'Memoria descriptiva', href: '/app/casopractico', group: 'Caso práctico' },
       { icon: 'engineering', text: 'Revisar caso práctico', href: '/app/revisarCasoPractico', group: 'Caso práctico' },

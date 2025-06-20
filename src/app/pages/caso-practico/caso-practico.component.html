@@ -1,0 +1,66 @@
+<div *ngIf="loading">Cargando datos...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="!loading && practicalCase">
+  <div class="section" *ngFor="let key of sectionKeys">
+    <h3>{{ sections[key].name }}</h3>
+    <p *ngIf="sections[key].comment"><strong>Sugerencia:</strong> {{ sections[key].comment }}</p>
+    <p *ngIf="sections[key].status"><strong>Estado:</strong> {{ sections[key].status }}</p>
+
+    <div class="bloques">
+      <div *ngFor="let texto of editedSections[key]; let i = index" class="bloque">
+        <div class="bloque-header">
+          <strong>Párrafo</strong>
+          <img
+            src="assets/asva.png"
+            class="icono-ia"
+            (click)="abrirConfiguracion(key, i)"
+          />
+        </div>
+        <textarea
+          id="{{ key }}-{{ i }}"
+          #textarea
+          [readonly]="isReadOnly(sections[key].status)"
+          [(ngModel)]="editedSections[key][i]"
+          (input)="onInputChange(key, i, $event)"
+        ></textarea>
+      </div>
+    </div>
+
+    <button (click)="agregarParrafo(key)" [disabled]="isReadOnly(sections[key].status)">
+      Agregar párrafo
+    </button>
+  </div>
+
+  <div class="nueva-seccion">
+    <input [(ngModel)]="newSectionName" placeholder="Nueva sección" />
+    <button (click)="agregarSeccion()">Agregar sección</button>
+  </div>
+
+  <button
+    class="guardar"
+    (click)="guardar()"
+    [disabled]="saving || hasEmptySections()"
+  >
+    Guardar
+  </button>
+</div>
+
+<!-- Modal de configuración -->
+<div class="modal" *ngIf="configModal.visible">
+  <div class="modal-content">
+    <h3>Revisión IA</h3>
+    <label>Original:</label>
+    <textarea readonly rows="6">{{ configModal.originalText }}</textarea>
+
+    <label>Sugerencia:</label>
+    <textarea [(ngModel)]="configModal.suggestion" rows="6" placeholder="La sugerencia generada aparecerá aquí..."></textarea>
+
+    <div class="acciones-modal">
+      <button class="guardar" (click)="aceptarSugerencia()">
+        Aceptar sugerencia
+      </button>
+      <button class="guardar" (click)="cerrarModal()">Cancelar</button>
+    </div>
+  </div>
+</div>

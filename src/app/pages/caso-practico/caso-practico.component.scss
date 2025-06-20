@@ -1,0 +1,128 @@
+.section {
+  background: #f8fefa;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.section h3 {
+  margin-top: 0;
+}
+
+.bloques {
+  margin-top: 10px;
+}
+
+.bloque {
+  margin-bottom: 15px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.bloque-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.icono-ia {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.nueva-seccion {
+  margin-top: 30px;
+}
+
+.guardar {
+  background: #ffc107;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.modal-content label {
+  font-weight: bold;
+  margin-top: 15px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.modal-content textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.acciones-modal {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.acciones-modal button {
+  background-color: #ffc107;
+  border: none;
+  color: #000;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.acciones-modal button:hover {
+  background-color: #e0ac00;
+}

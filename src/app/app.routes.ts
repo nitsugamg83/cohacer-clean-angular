@@ -38,7 +38,33 @@ export const routes: Routes = [
         path: 'evaluadora/iutmrevision',
         loadComponent: () =>
           import('./pages/evaluadora-revision/evaluadora-revision.component').then(m => m.AdminEvaluadoraRevisionComponent)
+      },
+      {
+      path: 'mi-proceso',
+        loadComponent: () =>
+          import('./pages/mi-proceso/mi-proceso.component').then(m => m.MiProcesoComponent)
+      },
+      {
+        path: 'casopractico',
+        loadComponent: () =>
+          import('./pages/caso-practico/caso-practico.component').then(m => m.CasoPracticoComponent)
+      },
+      {
+        path: 'crear-casopractico',
+        loadComponent: () =>
+          import('./pages/caso-practico/crear-proceso/crear-proceso.component').then(m => m.CrearProcesoComponent)
+      },
+      {
+        path: 'enrrolls-documents',
+        loadComponent: () =>
+          import('./pages/enroll-documents/enroll-documents.component').then(m => m.EnrollDocumentsComponent)
+      },
+      {
+        path: 'armado-fisico',
+        loadComponent: () =>
+          import('./pages/armado-fisico/armado-fisico/armado-fisico.component').then(m => m.ArmadoFisicoComponent)
       }
+
 
 
     ]

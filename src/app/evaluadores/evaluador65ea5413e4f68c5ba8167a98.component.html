@@ -1,0 +1,33 @@
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let doc of documentoList">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ doc.titulo }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="cards-container">
+      <mat-card>
+        <mat-card-title>Original</mat-card-title>
+        <mat-card-content>
+          <ul>
+            <li *ngFor="let item of doc.original.instrucciones">{{ item }}</li>
+          </ul>
+          <button *ngIf="doc.original.id" mat-button color="accent"
+                  (click)="downloadDocument(doc.original.id)">Descargar</button>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-title>Copia</mat-card-title>
+        <mat-card-content>
+          <ul>
+            <li *ngFor="let item of doc.copia.instrucciones">{{ item }}</li>
+          </ul>
+          <button *ngIf="doc.copia.id" mat-button color="accent"
+                  (click)="downloadDocument(doc.copia.id)">Descargar</button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

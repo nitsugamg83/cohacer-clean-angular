@@ -1,0 +1,138 @@
+<section class="container">
+  <h2>¿Qué camino tomarás?</h2>
+
+  <div id="error-message" *ngIf="error">{{ error }}</div>
+
+  <div *ngIf="step === 'chooseProcess'" class="selector">
+    <div class="buttons">
+      <button (click)="setLevel('bachillerato')">Bachillerato</button>
+      <button (click)="setLevel('licenciatura')">Licenciatura</button>
+      <button (click)="setLevel('maestria')">Maestría</button>
+    </div>
+    <div class="graphics">
+      <img src="/assets/caminoesmi.png" alt="Esmi mostrando el camino" />
+    </div>
+  </div>
+
+  <form *ngIf="step === 'levelQuestions'" (submit)="sendCurrent($event)">
+    <div *ngIf="process.processLevel === 'bachillerato'">
+      <fieldset class="input-container checkbox">
+        <legend>Edad mínima</legend>
+            <div class="checkbox-row">
+                <input type="checkbox" id="edad16" />
+                <label for="edad16">Confirmo que tengo más de 16 años cumplidos</label>
+            </div>
+      </fieldset>
+    </div>
+
+    <div *ngIf="process.processLevel === 'licenciatura'">
+    <fieldset class="input-container checkbox">
+        <legend>Edad mínima</legend>
+        <div class="checkbox-row">
+        <input type="checkbox" id="edad25" />
+        <label for="edad25">Confirmo que tengo más de 25 años cumplidos</label>
+        </div>
+    </fieldset>
+
+    <fieldset class="input-container checkbox">
+        <legend>Experiencia mínima</legend>
+        <div class="checkbox-row">
+        <input type="checkbox" id="exp" />
+        <label for="exp">Confirmo que tengo más de 3 años de experiencia laboral</label>
+        </div>
+    </fieldset>
+
+    <fieldset class="input-container checkbox">
+        <legend>Certificado de bachillerato</legend>
+        <div class="checkbox-row">
+        <input type="checkbox" id="cert" />
+        <label for="cert">
+            Confirmo que tengo mi certificado de bachillerato y que he revisado que este se encuentre registrado en al menos una de las siguientes plataformas:<br />
+            <a href="https://www.certelec.mx/" target="_blank">CERTELEC</a>,
+            <a href="https://www.gob.mx/sep" target="_blank">SEDUC</a>,
+            <a href="https://www.seduvi.cdmx.gob.mx/" target="_blank">SEDUVI</a> o en
+            <a href="https://www.uanl.mx/enlinea/siase/" target="_blank">SIASE</a>
+        </label>
+        </div>
+    </fieldset>
+</div>
+
+
+    <div *ngIf="process.processLevel === 'maestria'">
+      <fieldset class="input-container checkbox">
+        <legend>Edad mínima</legend>
+        <div class="checkbox-row">
+            <input type="checkbox" id="edad18" />
+            <label for="edad18">Confirmo que tengo más de 18 años cumplidos</label>
+        </div>
+      </fieldset>
+      <fieldset class="input-container checkbox">
+        <legend>Título previo</legend>
+        <div class="checkbox-row">
+            <input type="checkbox" id="lic" />
+            <label for="lic">Confirmo que tengo al menos 1 año desde que obtuve mi título de licenciatura</label>
+        </div>
+        </fieldset>
+      <fieldset class="input-container checkbox">
+        <legend>Experiencia en administración</legend>
+        <div class="checkbox-row">
+            <input type="checkbox" id="adm" />
+            <label for="adm">Confirmo experiencia en administración y gestión de negocios</label>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="row">
+      <button type="button" (click)="returnFromLevelQuestions()">Regresar</button>
+      <button type="submit">Siguiente</button>
+    </div>
+  </form>
+
+  <form *ngIf="step === 'chooseCareer'" (submit)="sendCurrent($event)">
+    <fieldset class="input-container">
+      <legend><label for="career">Carrera</label></legend>
+      <select id="career" (change)="setCareer($event)">
+        <optgroup label="Carreras Reguladas">
+          <option>Contaduría</option>
+          <option>Derecho</option>
+          <option>Educación Preescolar</option>
+          <option>Ingeniería Computacional</option>
+          <option>Ingeniería Industrial</option>
+        </optgroup>
+        <optgroup label="Carreras No Reguladas">
+          <option selected>Administración</option>
+          <option>Ciencias de la Comunicación</option>
+          <option>Ciencias Políticas y Administración Pública</option>
+          <option>Comercio y Negocios Internacionales</option>
+          <option>Mercadotecnia</option>
+          <option>Pedagogía</option>
+        </optgroup>
+      </select>
+    </fieldset>
+    <fieldset class="input-container checkbox" *ngIf="['Contaduría','Derecho','Educación Preescolar','Ingeniería Computacional','Ingeniería Industrial'].includes(process.processCareer)">
+      <legend>Créditos de carrera</legend>
+      <div class="checkbox-row">
+        <input type="checkbox" id="creditos" />
+        <label for="creditos">Confirmo que tengo más de 50% de créditos de la carrera seleccionada</label>
+      </div>
+    </fieldset>
+    <div class="row">
+      <button type="button" (click)="returnFromCareerChoose()">Regresar</button>
+      <button type="submit">Siguiente</button>
+    </div>
+  </form>
+
+  <form *ngIf="step === 'processTerms'" (submit)="sendCurrent($event)">
+    <fieldset class="input-container checkbox">
+      <legend>Términos y condiciones</legend>
+      <div class="checkbox-row">
+        <input type="checkbox" id="tyc" />
+        <label for="tyc">Acepto los <a href="/terminosycondiciones" target="_blank">términos y condiciones</a></label>
+      </div>
+    </fieldset>
+    <div class="row">
+      <button type="button" (click)="returnFromTerms()">Regresar</button>
+      <button type="submit">Crear proceso</button>
+    </div>
+  </form>
+</section>

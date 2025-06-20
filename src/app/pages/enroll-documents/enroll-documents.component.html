@@ -1,0 +1,96 @@
+<div *ngIf="loading">Cargando datos...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="!loading && profile">
+  <!-- Foto de perfil -->
+  <div class="section">
+    <h3>Foto de perfil</h3>
+    <div class="photo-box" (click)="fileInput.click()">
+      <ng-container *ngIf="photoPreview; else addIcon">
+        <img [src]="photoPreview" alt="Foto de perfil" />
+      </ng-container>
+      <ng-template #addIcon>
+        <i class="material-icons">add_a_photo</i>
+      </ng-template>
+    </div>
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      [disabled]="!profile || !profile._id"
+      style="display: none"
+      (change)="handlePhotoInput($event)"
+    />
+    <p *ngIf="isUploading">Subiendo foto...</p>
+  </div>
+  <ng-template #loadingProfile>
+    <p>Esperando datos de perfil para habilitar subida...</p>
+  </ng-template>
+
+  <!-- Caso práctico -->
+  <div class="section">
+    <h3>Caso práctico</h3>
+    <p>Pendiente</p>
+    <button (click)="goToCase()">Ir al caso práctico</button>
+  </div>
+
+  <!-- Dictamen de examen teórico -->
+  <div class="section">
+    <h3>Dictamen de Examen teórico</h3>
+    <p>Pendiente</p>
+    <p>Calificación: Sin calificar</p>
+  </div>
+
+  <!-- Dictamen de examen práctico -->
+  <div class="section">
+    <h3>Dictamen de Examen práctico</h3>
+    <p>Pendiente</p>
+    <p>Calificación: Sin calificar</p>
+  </div>
+
+  <!-- Armado físico -->
+  <div class="section">
+    <h3>Armado físico</h3>
+    <p>Pendiente</p>
+    <button (click)="goToArmado()">Ir al armado físico</button>
+  </div>
+
+  <!-- Información de envío -->
+  <div class="section" *ngIf="profile.physicalShipmentInfo">
+    <h3>Información de envío</h3>
+    <p>Estado: {{ profile.physicalShipmentInfo.status }}</p>
+    <div *ngFor="let note of profile.physicalShipmentInfo.notes">
+      <p>- {{ note.note }}</p>
+    </div>
+  </div>
+
+  <!-- Documentos requeridos -->
+  <div class="section" *ngIf="evaluator?.formats?.length">
+    <h3>Documentos requeridos</h3>
+    <div class="card-list">
+      <div class="card" *ngFor="let format of evaluator.formats">
+        <h4>{{ format.name }}</h4>
+        <p>Estado: {{ getDocumentStatus(format._id) }}</p>
+        <p *ngIf="getLatestNote(format._id)" class="note">
+          Nota: {{ getLatestNote(format._id) }}
+        </p>
+        <button *ngIf="format.fileUrlType === 'external'" (click)="openExternalLink(format.fileUrl)">Obtener documento</button>
+        <button *ngIf="format.fileUrlType === 'download'" (click)="openExternalLink(format.fileUrl)">Descargar plantilla</button>
+        <button *ngIf="format.fileUrlType === 'internal'" (click)="goToInternal(format.fileUrl)">Ir al documento</button>
+        <button (click)="selectFile(format)">Subir PDF</button>
+        <button *ngIf="format.howToVideo" (click)="openVideo(format.howToVideo)">Ver video</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input oculto para carga de archivos PDF -->
+  <input id="fileInput" type="file" style="display: none" (change)="handleFileInput($event)" accept=".pdf" />
+
+  <!-- Modal para video -->
+  <div class="video-modal" *ngIf="showVideo">
+    <div class="video-content">
+      <button class="close" (click)="closeVideo()">X</button>
+      <iframe width="560" height="315" [src]="getSafeUrl(videoUrl)" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>

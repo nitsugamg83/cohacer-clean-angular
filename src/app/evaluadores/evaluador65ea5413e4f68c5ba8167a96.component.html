@@ -1,0 +1,98 @@
+
+<div *ngIf="loading" class="loading-container">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  <p>{{ loading }}</p>
+</div>
+
+<div *ngIf="!loading && enroll">
+  <div *ngIf="enroll.physicalShipmentInfo && !['Pendiente', 'Rechazado'].includes(enroll.physicalShipmentInfo.status)">
+    <div class="cards-container">
+      <mat-card>
+        <mat-card-title>Paquete enviado</mat-card-title>
+        <mat-card-content>
+          <p>{{ enroll.physicalShipmentInfo.method }}</p>
+          <p>{{ enroll.physicalShipmentInfo.status }}</p>
+          <p>Empresa: {{ enroll.physicalShipmentInfo.tracking.name }}</p>
+          <p>Código de rastreo: {{ enroll.physicalShipmentInfo.tracking.number }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="openShipmentUrl()">Rastrear</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <div *ngIf="!enroll.physicalShipmentInfo || ['Pendiente', 'Rechazado'].includes(enroll.physicalShipmentInfo.status)">
+    <mat-card class="note">
+      Se van a armar 2 expedientes físicos, uno original y una copia. Recuerda acomodar los documentos en el mismo orden en que aparecen en esta lista.
+      <b>Asegúrate de tener tu folder color beige abierto para que vayas acomodando los documentos.</b>
+    </mat-card>
+
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let doc of documentoList">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ doc.titulo }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="cards-container">
+          <mat-card>
+            <mat-card-title>Original</mat-card-title>
+            <mat-card-content>
+              <ul>
+                <li *ngFor="let item of doc.original.instrucciones">{{ item }}</li>
+              </ul>
+              <button *ngIf="doc.original.id" mat-button color="accent" (click)="downloadDocument(doc.original.id)">Descargar</button>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card>
+            <mat-card-title>Copia</mat-card-title>
+            <mat-card-content>
+              <ul>
+                <li *ngFor="let item of doc.copia.instrucciones">{{ item }}</li>
+              </ul>
+              <button *ngIf="doc.copia.id" mat-button color="accent" (click)="downloadDocument(doc.copia.id)">Descargar</button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          9.- Seleccionar método de entrega
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="cards-container">
+        <mat-card>
+          <mat-card-title>Enviar por paquetería</mat-card-title>
+          <mat-card-content>
+            <ul>
+              <li>At'n: Dr. Josué Varela COHACER/UNIDHO.<br>Montecito 38, WTC-CDMX Piso 34 Oficina 13, CP. 03810, CDMX</li>
+              <li>Horario: L-V 9:00-17:00, S 09:00-13:00</li>
+            </ul>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="abrirDialogoEnvio()">Seleccionar</button>
+          </mat-card-actions>
+        </mat-card>
+
+        <mat-card>
+          <mat-card-title>Entregar en oficinas</mat-card-title>
+          <mat-card-content>
+            <ul>
+              <li>Si vives cerca de la oficina puedes entregarlo personalmente.</li>
+              <li>Revisa constantemente la página para saber si ya puedes agendar tu cita.</li>
+            </ul>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button disabled>Próximamente</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="container">
+  <ng-container *ngIf="enroll && enroll.length > 0; else startProcess">
+    <header *ngIf="specialRender === 'maestria'">
+      <h2>Estas inscrito en una maestría</h2>
+    </header>
+    <div class="tribe-stats" *ngIf="specialRender === 'maestria'">
+      <p>
+        De momento tendremos tu inscripción en espera, recibirás un correo con la información necesaria
+        para continuar con tu proceso cuando la maestría esté disponible.
+      </p>
+    </div>
+
+    <ng-container *ngIf="specialRender !== 'maestria'">
+      <header>
+        <h2>Elige tu proceso</h2>
+      </header>
+      <div class="tribe-stats"></div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #startProcess>
+    <cohacer-crear-proceso></cohacer-crear-proceso>
+  </ng-template>
+</div>

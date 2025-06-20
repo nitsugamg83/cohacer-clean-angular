@@ -1,0 +1,33 @@
+<h2>Información del envío</h2>
+
+<form (ngSubmit)="guardar()" *ngIf="!enviado">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Método de envío</mat-label>
+    <mat-select [(ngModel)]="shipmentMethod" name="shipmentMethod" required>
+      <mat-option value="Paquetería">Paquetería</mat-option>
+      <mat-option value="Entrega en oficina">Entrega en oficina</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Empresa de envío</mat-label>
+    <input matInput [(ngModel)]="company" name="company" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Código de rastreo</mat-label>
+    <input matInput [(ngModel)]="trackingNumber" name="trackingNumber" required />
+  </mat-form-field>
+
+  <div class="button-group">
+    <button mat-raised-button color="primary" type="submit">Guardar</button>
+    <button mat-button type="button" (click)="cerrar()">Cancelar</button>
+  </div>
+
+  <p *ngIf="error" class="error">{{ error }}</p>
+</form>
+
+<div *ngIf="enviado" class="success-message">
+  <p>✅ Datos enviados correctamente.</p>
+  <button mat-button color="primary" (click)="cerrar()">Cerrar</button>
+</div>

@@ -1,0 +1,16 @@
+<div *ngIf="loading" class="loading-container">
+  <mat-spinner></mat-spinner>
+  <p>{{ loading }}</p>
+</div>
+
+<ng-container *ngIf="!loading && enroll">
+  <app-evaluador65ea5413e4f68c5ba8167a96
+    *ngIf="getEvaluador() === '96'"
+    [enroll]="enroll">
+  </app-evaluador65ea5413e4f68c5ba8167a96>
+
+  <app-evaluador65ea5413e4f68c5ba8167a98
+    *ngIf="getEvaluador() === '98'"
+    [enroll]="enroll">
+  </app-evaluador65ea5413e4f68c5ba8167a98>
+</ng-container>
