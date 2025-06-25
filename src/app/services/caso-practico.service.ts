@@ -8,12 +8,16 @@ import { environment } from '../../environments/environment';
 })
 export class CasoPracticoService {
   private API_URL = environment.apiUrl;
-  private headers = new HttpHeaders({
-    Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
-    'Content-Type': 'application/json'
-  });
 
   constructor(private http: HttpClient) {}
+
+  private get headers(): HttpHeaders {
+    const token = localStorage.getItem('token') || '';
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+  }
 
   getUser(): Observable<any> {
     return this.http.get<any>(`${this.API_URL}/api/v2/user/me`, { headers: this.headers });
@@ -27,17 +31,45 @@ export class CasoPracticoService {
     return this.http.get<any>(`${this.API_URL}/api/practicalcase/me`, { headers: this.headers });
   }
 
-  updatePracticalCase(practicalCaseId: string, sectionId: string, body: any): Observable<any> {
+  savePortada(data: any): Observable<any> {
+    return this.http.post(`${this.API_URL}/api/practicalcase/portada`, data, { headers: this.headers });
+  }
+
+  saveSection(practicalCaseId: string, sectionId: string, body: any): Observable<any> {
     const url = `${this.API_URL}/api/practicalcase/${practicalCaseId}/section/${sectionId}`;
     return this.http.put(url, body, { headers: this.headers });
   }
 
-  crearProceso(data: { processLevel: string, processCareer?: string }): Observable<any> {
+  requestSectionReview(practicalCaseId: string, sectionId: string, body: any): Observable<any> {
+    return this.http.put(`${this.API_URL}/api/practicalcase/${practicalCaseId}/section/${sectionId}/review`, body, { headers: this.headers });
+  }
+
+  returnToWorking(practicalCaseId: string, sectionId: string, body: any): Observable<any> {
+    return this.http.put(`${this.API_URL}/api/practicalcase/${practicalCaseId}/section/${sectionId}/return`, body, { headers: this.headers });
+  }
+
+  deleteSection(practicalCaseId: string, sectionId: string, body: any): Observable<any> {
+    return this.http.request('DELETE', `${this.API_URL}/api/practicalcase/${practicalCaseId}/section/${sectionId}`, {
+      body,
+      headers: this.headers
+    });
+  }
+
+  moveSection(practicalCaseId: string, sectionId: string, direction: string, subsection?: string): Observable<any> {
+    return this.http.put(`${this.API_URL}/api/practicalcase/${practicalCaseId}/section/${sectionId}/subsection/${subsection}/move`, {
+      direction,
+      subsection
+    }, {
+      headers: this.headers
+    });
+  }
+
+  crearProceso(data: { processLevel: string; processCareer?: string }): Observable<any> {
     const url = `${this.API_URL}/api/enroll/autoenroll`;
     return this.http.post<any>(url, data, { headers: this.headers });
   }
 
-  revisarTexto(data: { text: string, suggestion?: string }): Observable<any> {
+  revisarTexto(data: { text: string; suggestion?: string }): Observable<any> {
     const url = `${this.API_URL}/api/asva/review`;
     return this.http.post<any>(url, data, { headers: this.headers });
   }

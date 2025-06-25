@@ -1,0 +1,13 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Título</mat-label>
+    <input matInput formControlName="title" placeholder="Título del caso práctico">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>URL de la imagen</mat-label>
+    <input matInput formControlName="image" placeholder="https://...">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Guardar</button>
+</form>
