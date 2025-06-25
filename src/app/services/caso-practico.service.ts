@@ -73,4 +73,10 @@ export class CasoPracticoService {
     const url = `${this.API_URL}/api/asva/review`;
     return this.http.post<any>(url, data, { headers: this.headers });
   }
+
+  renameSubsection(practicalCaseId: string, sectionId: string, subsectionId: string, newName: string): Observable<any> {
+    const url = `${this.API_URL}/api/practicalcase/${practicalCaseId}/section/${sectionId}/subsection/${subsectionId}/rename`;
+    return this.http.put(url, { name: newName }, { headers: this.headers });
+  }
+
 }

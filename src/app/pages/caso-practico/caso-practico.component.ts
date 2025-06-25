@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CasoPracticoService } from '../../services/caso-practico.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { PortadaFormComponent } from './portada-form/portada-form.component';
 
@@ -19,6 +20,7 @@ import { PortadaFormComponent } from './portada-form/portada-form.component';
     MatCardModule,
     MatProgressSpinnerModule,
     MatButtonModule,
+    MatInputModule,
     PortadaFormComponent
   ]
 })
@@ -28,10 +30,7 @@ export class CasoPracticoComponent implements OnInit {
   enroll: any = {};
   data: any = {};
   loading = 'Cargando...';
-  debouncers: Record<string, any> = {};
   saving = false;
-  currentVideoId: string | null = null;
-  @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
 
   sectionKeys: string[] = [];
   sectionTexts: { [key: string]: string } = {};
@@ -111,16 +110,69 @@ export class CasoPracticoComponent implements OnInit {
 
   async onSaveSection(sectionId: string, blocks: any[], subtitle?: string): Promise<void> {
     this.saving = true;
-    try {
-      const usedId = subtitle ? this.practicalCase.sections.development._id : sectionId;
-      await this.casoPracticoService.saveSection(this.practicalCase._id, usedId, { blocks, subtitle }).toPromise();
-    } catch (e) {
-      console.error(e);
-    }
+    const usedId = subtitle ? this.practicalCase.sections.development._id : sectionId;
+    await this.casoPracticoService.saveSection(this.practicalCase._id, usedId, { blocks, subtitle }).toPromise();
     this.saving = false;
   }
 
-  async viewPreview(): Promise<void> {
+  async requestReview(sectionId: string, subtitle?: string): Promise<void> {
+    const subsection = this.findSubsectionId(subtitle) ?? undefined;
+    await this.casoPracticoService.requestSectionReview(this.practicalCase._id, sectionId, { subsection }).toPromise();
+    await this.init();
+  }
+
+  async returnToWorking(sectionId: string, subtitle?: string): Promise<void> {
+    const subsection = this.findSubsectionId(subtitle) ?? undefined;
+    await this.casoPracticoService.returnToWorking(this.practicalCase._id, sectionId, { subsection }).toPromise();
+    await this.init();
+  }
+
+  async deleteSubsection(sectionId: string, subtitle: string): Promise<void> {
+    const rand = new Date().getTime().toString(16).slice(-4);
+    const userval = prompt(`Escribe el siguiente código para eliminar la etapa: ${rand}`);
+    if ((userval || '').toLowerCase() !== rand) return;
+    const subsection = this.findSubsectionId(subtitle) ?? undefined;
+    await this.casoPracticoService.deleteSection(this.practicalCase._id, sectionId, { subsection }).toPromise();
+    await this.init();
+  }
+
+  async moveSection(sectionId: string, subtitle: string, direction: 'up' | 'down'): Promise<void> {
+    const subsection = this.findSubsectionId(subtitle) ?? undefined;
+    await this.casoPracticoService.moveSection(this.practicalCase._id, sectionId, direction, subsection).toPromise();
+    await this.init();
+  }
+
+  async renameSubsection(sectionId: string, sub: any): Promise<void> {
+    const newName = prompt('Nuevo nombre de la etapa', sub.name);
+    if (!newName) return;
+    await this.casoPracticoService.renameSubsection(this.practicalCase._id, sectionId, sub._id, newName).toPromise();
+    await this.init();
+  }
+
+  async addSubDevelopment(): Promise<void> {
+    const name = prompt('Nombre de la nueva etapa');
+    if (!name) return;
+    if (this.practicalCase.sections.development.subsections.find((s: any) => s.name.toLowerCase() === name.toLowerCase())) {
+      alert('Ya existe una etapa con ese nombre');
+      return;
+    }
+    this.practicalCase.sections.development.subsections.push({
+      name,
+      blocks: [{ type: 'paragraph', data: { content: '' } }]
+    });
+    this.subsectionTexts = { ...this.subsectionTexts };
+    await this.init();
+  }
+
+  viewPreview(): void {
     window.open(`/practicalcase/${this.practicalCase._id}/preview`, '_blank');
+  }
+
+  private findSubsectionId(subtitle?: string): string | null {
+    if (!subtitle) return null;
+    const match = this.practicalCase.sections.development.subsections.find(
+      (s: any) => s.name.toLowerCase() === subtitle.toLowerCase()
+    );
+    return match?._id || null;
   }
 }

@@ -20,36 +20,85 @@
     (save)="onSavePortada($event.title, $event.image)">
   </app-portada-form>
 
+  <!-- Secciones principales -->
   <ng-container *ngFor="let key of sectionKeys">
     <ng-container *ngIf="key !== 'development'">
       <mat-card>
         <mat-card-title>{{ sectionTitleMap[key] || key }}</mat-card-title>
         <mat-card-content>
+          <p *ngIf="practicalCase.sections[key].status">Estado: {{ practicalCase.sections[key].status }}</p>
+          <p *ngIf="practicalCase.sections[key].comment" style="color: red;">
+            Comentario: {{ practicalCase.sections[key].comment }}
+          </p>
           <textarea [(ngModel)]="sectionTexts[key]" rows="6" style="width:100%"></textarea>
-          <button mat-stroked-button color="primary"
-                  (click)="onSaveSection(practicalCase.sections[key]._id, [{ type: 'paragraph', data: { content: sectionTexts[key] } }])">
-            Guardar {{ sectionTitleMap[key] || key }}
-          </button>
+          <div style="margin-top: 0.5rem;">
+            <button mat-stroked-button color="primary"
+              (click)="onSaveSection(practicalCase.sections[key]._id, [{ type: 'paragraph', data: { content: sectionTexts[key] } }])">
+              Guardar
+            </button>
+            <button mat-stroked-button color="accent"
+              (click)="requestReview(practicalCase.sections[key]._id)">
+              Solicitar revisión
+            </button>
+            <button mat-stroked-button color="warn"
+              *ngIf="practicalCase.sections[key].status === 'Aceptado' || practicalCase.sections[key].status === 'En revisión'"
+              (click)="returnToWorking(practicalCase.sections[key]._id)">
+              Volver a edición
+            </button>
+          </div>
         </mat-card-content>
       </mat-card>
     </ng-container>
   </ng-container>
 
+  <!-- Subetapas de desarrollo -->
   <mat-card>
     <mat-card-title>Desarrollo</mat-card-title>
     <mat-card-content>
-      <ng-container *ngFor="let sub of practicalCase.sections.development.subsections">
+      <ng-container *ngFor="let sub of practicalCase.sections.development.subsections; let i = index">
         <mat-card style="margin-top: 1rem;">
           <mat-card-title>{{ sub.name }}</mat-card-title>
           <mat-card-content>
+            <p *ngIf="sub.status">Estado: {{ sub.status }}</p>
+            <p *ngIf="sub.comment" style="color: red;">Comentario: {{ sub.comment }}</p>
             <textarea [(ngModel)]="subsectionTexts[sub._id]" rows="6" style="width:100%"></textarea>
-            <button mat-stroked-button color="primary"
-                    (click)="onSaveSection(practicalCase.sections.development._id, [{ type: 'paragraph', data: { content: subsectionTexts[sub._id] } }], sub.name)">
-              Guardar {{ sub.name }}
-            </button>
+
+            <div style="margin-top: 0.5rem;">
+              <button mat-stroked-button color="primary"
+                (click)="onSaveSection(practicalCase.sections.development._id, [{ type: 'paragraph', data: { content: subsectionTexts[sub._id] } }], sub.name)">
+                Guardar
+              </button>
+              <button mat-stroked-button color="accent"
+                (click)="requestReview(practicalCase.sections.development._id, sub.name)">
+                Solicitar revisión
+              </button>
+              <button mat-stroked-button color="warn"
+                *ngIf="sub.status === 'Aceptado' || sub.status === 'En revisión'"
+                (click)="returnToWorking(practicalCase.sections.development._id, sub.name)">
+                Volver a edición
+              </button>
+              <button mat-stroked-button color="warn"
+                (click)="deleteSubsection(practicalCase.sections.development._id, sub.name)">
+                Eliminar
+              </button>
+              <button mat-stroked-button (click)="renameSubsection(practicalCase.sections.development._id, sub)">
+                Renombrar
+              </button>
+              <button mat-stroked-button *ngIf="i > 0"
+                (click)="moveSection(practicalCase.sections.development._id, sub.name, 'up')">
+                Subir
+              </button>
+              <button mat-stroked-button *ngIf="i < practicalCase.sections.development.subsections.length - 1"
+                (click)="moveSection(practicalCase.sections.development._id, sub.name, 'down')">
+                Bajar
+              </button>
+            </div>
           </mat-card-content>
         </mat-card>
       </ng-container>
+      <div style="margin-top: 1rem;">
+        <button mat-raised-button color="primary" (click)="addSubDevelopment()">Agregar etapa</button>
+      </div>
     </mat-card-content>
   </mat-card>
 
