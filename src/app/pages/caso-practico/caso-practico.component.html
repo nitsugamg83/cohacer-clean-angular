@@ -23,17 +23,19 @@
   <!-- Secciones principales -->
   <ng-container *ngFor="let key of sectionKeys">
     <ng-container *ngIf="key !== 'development'">
-      <mat-card>
+      <mat-card style="margin-top: 1rem;">
         <mat-card-title>{{ sectionTitleMap[key] || key }}</mat-card-title>
         <mat-card-content>
           <p *ngIf="practicalCase.sections[key].status">Estado: {{ practicalCase.sections[key].status }}</p>
           <p *ngIf="practicalCase.sections[key].comment" style="color: red;">
             Comentario: {{ practicalCase.sections[key].comment }}
           </p>
-          <textarea [(ngModel)]="sectionTexts[key]" rows="6" style="width:100%"></textarea>
+
+          <app-editor-block [(blocks)]="sectionBlocks[key]"></app-editor-block>
+
           <div style="margin-top: 0.5rem;">
             <button mat-stroked-button color="primary"
-              (click)="onSaveSection(practicalCase.sections[key]._id, [{ type: 'paragraph', data: { content: sectionTexts[key] } }])">
+              (click)="onSaveSection(practicalCase.sections[key]._id, sectionBlocks[key])">
               Guardar
             </button>
             <button mat-stroked-button color="accent"
@@ -52,7 +54,7 @@
   </ng-container>
 
   <!-- Subetapas de desarrollo -->
-  <mat-card>
+  <mat-card style="margin-top: 2rem;">
     <mat-card-title>Desarrollo</mat-card-title>
     <mat-card-content>
       <ng-container *ngFor="let sub of practicalCase.sections.development.subsections; let i = index">
@@ -61,11 +63,12 @@
           <mat-card-content>
             <p *ngIf="sub.status">Estado: {{ sub.status }}</p>
             <p *ngIf="sub.comment" style="color: red;">Comentario: {{ sub.comment }}</p>
-            <textarea [(ngModel)]="subsectionTexts[sub._id]" rows="6" style="width:100%"></textarea>
+
+            <app-editor-block [(blocks)]="subsectionBlocks[sub._id]"></app-editor-block>
 
             <div style="margin-top: 0.5rem;">
               <button mat-stroked-button color="primary"
-                (click)="onSaveSection(practicalCase.sections.development._id, [{ type: 'paragraph', data: { content: subsectionTexts[sub._id] } }], sub.name)">
+                (click)="onSaveSection(practicalCase.sections.development._id, subsectionBlocks[sub._id], sub.name)">
                 Guardar
               </button>
               <button mat-stroked-button color="accent"
@@ -96,13 +99,13 @@
           </mat-card-content>
         </mat-card>
       </ng-container>
+
       <div style="margin-top: 1rem;">
         <button mat-raised-button color="primary" (click)="addSubDevelopment()">Agregar etapa</button>
       </div>
     </mat-card-content>
   </mat-card>
 
-  <!-- Vista previa -->
   <div style="margin-top: 2rem;">
     <button mat-raised-button color="accent" (click)="viewPreview()">Vista previa</button>
   </div>

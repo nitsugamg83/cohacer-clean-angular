@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { PortadaFormComponent } from './portada-form/portada-form.component';
 import { SafePipe } from '../../pipes/safe.pipe';
+import { EditorBlockComponent } from './editor-block/editor-block.component';
 
 @Component({
   selector: 'app-caso-practico',
@@ -23,7 +24,8 @@ import { SafePipe } from '../../pipes/safe.pipe';
     MatButtonModule,
     MatInputModule,
     PortadaFormComponent,
-    SafePipe
+    SafePipe,
+    EditorBlockComponent
   ]
 })
 export class CasoPracticoComponent implements OnInit {
@@ -38,8 +40,8 @@ export class CasoPracticoComponent implements OnInit {
   previewUrl = '';
 
   sectionKeys: string[] = [];
-  sectionTexts: { [key: string]: string } = {};
-  subsectionTexts: { [key: string]: string } = {};
+  sectionBlocks: { [key: string]: any[] } = {};
+  subsectionBlocks: { [key: string]: any[] } = {};
   sectionTitleMap: { [key: string]: string } = {
     introduction: 'Introducción',
     thanks: 'Agradecimientos',
@@ -80,27 +82,18 @@ export class CasoPracticoComponent implements OnInit {
 
     this.sectionKeys = Object.keys(this.practicalCase.sections);
 
+    this.sectionBlocks = {};
+    this.subsectionBlocks = {};
+
     for (const key of this.sectionKeys) {
       if (key !== 'development') {
-        const blocks = this.practicalCase.sections[key]?.blocks || [];
-        this.sectionTexts[key] = this.blocksText(blocks);
+        this.sectionBlocks[key] = this.practicalCase.sections[key]?.blocks || [];
       } else {
         for (const sub of this.practicalCase.sections.development.subsections || []) {
-          const blocks = sub.blocks || [];
-          this.subsectionTexts[sub._id] = this.blocksText(blocks);
+          this.subsectionBlocks[sub._id] = sub.blocks || [];
         }
       }
     }
-  }
-
-  blocksText(blocks: any[]): string {
-    let text = '';
-    blocks?.forEach(block => {
-      if (block.type === 'paragraph') {
-        text += `${block.data.content}\n`;
-      }
-    });
-    return text;
   }
 
   async onSavePortada(title: string, image: string): Promise<void> {

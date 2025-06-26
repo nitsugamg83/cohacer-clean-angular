@@ -1,0 +1,5 @@
+<div *ngFor="let block of blocks">
+  <p *ngIf="block.type === 'paragraph'">
+    {{ block.data.content }}
+  </p>
+</div>
