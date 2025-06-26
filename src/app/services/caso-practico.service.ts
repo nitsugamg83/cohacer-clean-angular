@@ -18,6 +18,10 @@ export class CasoPracticoService {
       'Content-Type': 'application/json'
     });
   }
+  public get apiUrl(): string {
+    return this.API_URL;
+  }
+
 
   getUser(): Observable<any> {
     return this.http.get<any>(`${this.API_URL}/api/v2/user/me`, { headers: this.headers });
@@ -79,4 +83,8 @@ export class CasoPracticoService {
     return this.http.put(url, { name: newName }, { headers: this.headers });
   }
 
+  addSubsection(practicalCaseId: string, sectionId: string, name: string): Observable<any> {
+    const url = `${this.API_URL}/api/practicalcase/${practicalCaseId}/section/${sectionId}/subsection`;
+    return this.http.post(url, { name }, { headers: this.headers });
+  }
 }

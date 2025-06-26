@@ -102,7 +102,23 @@
     </mat-card-content>
   </mat-card>
 
+  <!-- Vista previa -->
   <div style="margin-top: 2rem;">
     <button mat-raised-button color="accent" (click)="viewPreview()">Vista previa</button>
+  </div>
+
+  <div *ngIf="showPreview" style="margin-top: 2rem;">
+    <mat-card>
+      <mat-card-title>Vista previa</mat-card-title>
+      <mat-card-content>
+        <iframe
+          [src]="previewUrl | safe"
+          width="100%"
+          height="600px"
+          frameborder="0"
+          style="border: 1px solid #ccc; border-radius: 4px;">
+        </iframe>
+      </mat-card-content>
+    </mat-card>
   </div>
 </ng-template>

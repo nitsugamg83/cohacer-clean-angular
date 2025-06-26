@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { PortadaFormComponent } from './portada-form/portada-form.component';
+import { SafePipe } from '../../pipes/safe.pipe';
 
 @Component({
   selector: 'app-caso-practico',
@@ -21,7 +22,8 @@ import { PortadaFormComponent } from './portada-form/portada-form.component';
     MatProgressSpinnerModule,
     MatButtonModule,
     MatInputModule,
-    PortadaFormComponent
+    PortadaFormComponent,
+    SafePipe
   ]
 })
 export class CasoPracticoComponent implements OnInit {
@@ -31,6 +33,9 @@ export class CasoPracticoComponent implements OnInit {
   data: any = {};
   loading = 'Cargando...';
   saving = false;
+
+  showPreview = false;
+  previewUrl = '';
 
   sectionKeys: string[] = [];
   sectionTexts: { [key: string]: string } = {};
@@ -152,20 +157,27 @@ export class CasoPracticoComponent implements OnInit {
   async addSubDevelopment(): Promise<void> {
     const name = prompt('Nombre de la nueva etapa');
     if (!name) return;
-    if (this.practicalCase.sections.development.subsections.find((s: any) => s.name.toLowerCase() === name.toLowerCase())) {
+
+    const exists = this.practicalCase.sections.development.subsections.some(
+      (s: any) => s.name.toLowerCase() === name.toLowerCase()
+    );
+    if (exists) {
       alert('Ya existe una etapa con ese nombre');
       return;
     }
-    this.practicalCase.sections.development.subsections.push({
-      name,
-      blocks: [{ type: 'paragraph', data: { content: '' } }]
-    });
-    this.subsectionTexts = { ...this.subsectionTexts };
+
+    await this.casoPracticoService.addSubsection(
+      this.practicalCase._id,
+      this.practicalCase.sections.development._id,
+      name
+    ).toPromise();
+
     await this.init();
   }
 
   viewPreview(): void {
-    window.open(`/practicalcase/${this.practicalCase._id}/preview`, '_blank');
+    this.previewUrl = `${this.casoPracticoService.apiUrl}/api/practicalcase/${this.practicalCase._id}/preview`;
+    this.showPreview = true;
   }
 
   private findSubsectionId(subtitle?: string): string | null {
