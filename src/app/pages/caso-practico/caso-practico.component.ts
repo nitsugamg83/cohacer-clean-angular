@@ -108,7 +108,7 @@ export class CasoPracticoComponent implements OnInit {
 
   async onSaveSection(sectionId: string, blocks: any[], subtitle?: string): Promise<void> {
     this.saving = true;
-    const usedId = subtitle ? this.practicalCase.sections.development._id : sectionId;
+    const usedId = subtitle ? this.findDevelopmentId() : sectionId;
     await this.casoPracticoService.saveSection(this.practicalCase._id, usedId, { blocks, subtitle }).toPromise();
     this.saving = false;
   }
@@ -159,12 +159,40 @@ export class CasoPracticoComponent implements OnInit {
       return;
     }
 
-    await this.casoPracticoService.addSubsection(
-      this.practicalCase._id,
-      this.practicalCase.sections.development._id,
-      name
-    ).toPromise();
+    const sectionId = this.findDevelopmentId();
+    if (!sectionId) {
+      alert('No se pudo obtener el ID de la sección de desarrollo');
+      return;
+    }
 
+    this.loading = 'Agregando etapa...';
+
+    const body = {
+      subtitle: name,
+      blocks: [
+        {
+          type: 'paragraph',
+          data: {
+            content: ''
+          }
+        }
+      ]
+    };
+
+    try {
+      await this.casoPracticoService.saveSection(this.practicalCase._id, sectionId, body).toPromise();
+      await this.init();
+    } catch (err) {
+      console.error(err);
+      alert('Error al agregar la etapa');
+    } finally {
+      this.loading = '';
+    }
+  }
+
+  async requestPCReview(): Promise<void> {
+    this.loading = 'Solicitando revisión general...';
+    await this.casoPracticoService.requestSectionReview(this.practicalCase._id, 'review', {}).toPromise();
     await this.init();
   }
 
@@ -179,5 +207,14 @@ export class CasoPracticoComponent implements OnInit {
       (s: any) => s.name.toLowerCase() === subtitle.toLowerCase()
     );
     return match?._id || null;
+  }
+
+  private findDevelopmentId(): string {
+    const sectionEntry = Object.entries(this.practicalCase.sections).find(([key]) => key === 'development');
+    const section = sectionEntry?.[1] as { _id?: string };
+    if (!section || !section._id) {
+      throw new Error('No se encontró el _id de la sección development');
+    }
+    return section._id;
   }
 }

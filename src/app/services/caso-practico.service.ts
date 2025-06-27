@@ -79,9 +79,10 @@ export class CasoPracticoService {
   }
 
   renameSubsection(practicalCaseId: string, sectionId: string, subsectionId: string, newName: string): Observable<any> {
-    const url = `${this.API_URL}/api/practicalcase/${practicalCaseId}/section/${sectionId}/subsection/${subsectionId}/rename`;
+    const url = `${this.API_URL}/api/practicalcase/${practicalCaseId}/section/${subsectionId}/rename`;
     return this.http.put(url, { name: newName }, { headers: this.headers });
   }
+
 
   addSubsection(practicalCaseId: string, sectionId: string, name: string): Observable<any> {
     const url = `${this.API_URL}/api/practicalcase/${practicalCaseId}/section/${sectionId}/subsection`;
