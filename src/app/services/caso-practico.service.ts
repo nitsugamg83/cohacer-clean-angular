@@ -87,4 +87,10 @@ export class CasoPracticoService {
     const url = `${this.API_URL}/api/practicalcase/${practicalCaseId}/section/${sectionId}/subsection`;
     return this.http.post(url, { name }, { headers: this.headers });
   }
+
+  generarTextoIA(payload: any): Observable<any> {
+    const url = `${this.API_URL}/api/asva/gpt`;
+    return this.http.post<any>(url, payload, { headers: this.headers });
+  }
+
 }

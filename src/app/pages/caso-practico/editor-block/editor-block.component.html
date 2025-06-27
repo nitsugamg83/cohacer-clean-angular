@@ -12,8 +12,12 @@
     <div style="display: flex; gap: 0.5rem; align-items: center;">
       <button mat-stroked-button color="warn" (click)="removeBlock(i)">Eliminar</button>
 
-      <button mat-icon-button (click)="emitirRevisionAswa(i)" [disabled]="loading">
+      <button mat-icon-button (click)="emitirRevisionAswa(i)" [disabled]="loading" matTooltip="Revisión ASWA">
         <img [src]="asvaImg" alt="ASWA" width="32" height="32" />
+      </button>
+
+      <button mat-icon-button color="primary" (click)="desarrollarConIA(i)" matTooltip="Desarrollar con IA">
+        <mat-icon>settings</mat-icon>
       </button>
     </div>
   </ng-container>

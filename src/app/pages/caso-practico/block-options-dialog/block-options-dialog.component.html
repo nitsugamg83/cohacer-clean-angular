@@ -1,0 +1,47 @@
+<p>block-options-dialog works!</p>
+<h2 mat-dialog-title>Configuración</h2>
+<mat-dialog-content>
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+
+    <div style="display: flex; align-items: center; gap: 0.5rem;" *ngIf="data.canMoveDown">
+      <mat-icon color="primary">arrow_downward</mat-icon>
+      <div>
+        <strong>Bajar</strong><br />
+        <small>Bajar bloque</small>
+      </div>
+      <button mat-button (click)="onAction('down')">Bajar</button>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <mat-icon color="warn">spellcheck</mat-icon>
+      <div>
+        <strong>Corregir gramática</strong><br />
+        <small>Corregir gramática del texto</small>
+      </div>
+      <button mat-button color="warn" (click)="onAction('aswa')">Corregir</button>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <mat-icon>psychology</mat-icon>
+      <div>
+        <strong>Desarrollo con IA</strong><br />
+        <small>Genera un texto más preciso con IA</small>
+      </div>
+      <button mat-button (click)="onAction('ia')">Generar</button>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <mat-icon color="warn">delete</mat-icon>
+      <div>
+        <strong>Eliminar</strong><br />
+        <small>Eliminar este bloque</small>
+      </div>
+      <button mat-button color="warn" (click)="onAction('delete')">Eliminar</button>
+    </div>
+
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

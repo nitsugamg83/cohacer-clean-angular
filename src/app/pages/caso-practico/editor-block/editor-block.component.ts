@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CasoPracticoService } from '../../../services/caso-practico.service';
 import { AswaDialogComponent } from '../../../shared/asva-dialog.component';
-
+import { BlockOptionsDialogComponent } from '../block-options-dialog/block-options-dialog.component';
 
 @Component({
   selector: 'app-editor-block',
@@ -66,7 +66,7 @@ export class EditorBlockComponent {
       suggestion: `Estoy haciendo la introducción de un caso práctico, debería de ser formal y profesional.
 Los puntos a revisar son:
 grammar:El texto debe estar escrito correctamente, con buena ortografía, en tiempo pasado.
-name:El texto debe contener el giro de la empresa (Descripción de actividades) o el nombre de la misma. No es obligatorio ninguno de los 2 pero es necesario al menos uno.
+name:El texto debe contener el giro de la empresa (Descripción de actividades) o el nombre de la misma.
 date:El texto debe contener las fechas de inicio y final del proyecto.
 reason:El texto debe contener la razón por la cual se realizó el proyecto.
 beneficiaries:El texto debe contener una descripción de los beneficiarios del proyecto.
@@ -94,15 +94,12 @@ Regresa el siguiente JSON de acuerdo a tu evaluación
         return `${key}: ${label}. ${value.comment || ''}`;
       });
 
-      // Modal
       this.dialog.open(AswaDialogComponent, {
         data: {
           comentarios
         }
       });
 
-
-      // Voz
       const textoAVoz = comentarios.join('. ');
       this.asvaImg = 'assets/asvatalking.webp';
       this.speakText(textoAVoz);
@@ -114,6 +111,28 @@ Regresa el siguiente JSON de acuerdo a tu evaluación
         this.loading = false;
       }, 1500);
     }
+  }
+
+  desarrollarConIA(index: number): void {
+    const texto = this.blocks[index]?.data?.content || '';
+    const dialogRef = this.dialog.open(BlockOptionsDialogComponent, {
+      data: {
+        texto,
+        index
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result?.accion === 'eliminar') {
+        this.removeBlock(result.index);
+      }
+
+      if (result?.accion === 'generar' && result.generado) {
+        this.blocks[result.index].data.content = result.generado;
+        this.blocksChange.emit(this.blocks);
+        this.speakText('Texto generado exitosamente.');
+      }
+    });
   }
 
   speakText(text: string): void {
