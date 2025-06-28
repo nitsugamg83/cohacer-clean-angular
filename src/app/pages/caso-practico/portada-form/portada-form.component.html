@@ -1,13 +1,16 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" style="width: 100%;">
     <mat-label>Título</mat-label>
     <input matInput formControlName="title" placeholder="Título del caso práctico">
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>URL de la imagen</mat-label>
-    <input matInput formControlName="image" placeholder="https://...">
-  </mat-form-field>
+  <div style="margin-top: 1rem;">
+    <label>Imagen</label>
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+    <div *ngIf="uploading" style="margin-top: 0.5rem;">Subiendo imagen...</div>
+    <img *ngIf="form.get('image')?.value" [src]="form.get('image')?.value" alt="Imagen portada"
+         style="display: block; max-width: 100%; margin-top: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+  </div>
 
-  <button mat-raised-button color="primary" type="submit">Guardar</button>
+  <button mat-raised-button color="primary" type="submit" style="margin-top: 1.5rem;">Guardar</button>
 </form>

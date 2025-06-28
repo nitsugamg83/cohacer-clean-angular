@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { CasoPracticoService } from '../../../services/caso-practico.service';
 
 @Component({
   selector: 'app-portada-form',
@@ -25,8 +26,12 @@ export class PortadaFormComponent {
   @Output() save = new EventEmitter<{ title: string; image: string }>();
 
   form: FormGroup;
+  uploading = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private casoPracticoService: CasoPracticoService
+  ) {
     this.form = this.fb.group({
       title: [''],
       image: ['']
@@ -38,6 +43,25 @@ export class PortadaFormComponent {
       title: this.title,
       image: this.image
     });
+  }
+
+  async onFileSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    this.uploading = true;
+
+    try {
+      const response = await this.casoPracticoService.uploadFile(file).toPromise();
+      if (response?.file) {
+        this.form.get('image')?.setValue(response.file);
+      }
+    } catch (error) {
+      console.error('Error al subir la imagen:', error);
+    } finally {
+      this.uploading = false;
+    }
   }
 
   onSubmit(): void {

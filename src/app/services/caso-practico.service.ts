@@ -94,4 +94,21 @@ export class CasoPracticoService {
     return this.http.post<any>(url, payload, { headers: this.headers });
   }
 
+  uploadFile(file: File): Observable<{ file: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.post<{ file: string }>(
+      `${this.API_URL}/api/practicalcase/upload`,
+      formData,
+      { headers }
+    );
+  }
+
+
 }
