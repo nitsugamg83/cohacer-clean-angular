@@ -7,8 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CasoPracticoService } from '../../../services/caso-practico.service';
-import { AswaDialogComponent } from '../../../shared/asva-dialog.component';
 import { BlockOptionsDialogComponent } from '../block-options-dialog/block-options-dialog.component';
+import { AsvaDialogComponent } from '../../../shared/asva-dialog.component';
 
 @Component({
   selector: 'app-editor-block',
@@ -51,7 +51,7 @@ export class EditorBlockComponent {
     this.blocksChange.emit(this.blocks);
   }
 
-  async emitirRevisionAswa(index: number): Promise<void> {
+  async emitirRevisionAsva(index: number): Promise<void> {
     const texto = this.blocks[index]?.data?.content || '';
     if (!texto.trim()) {
       this.speakText('El bloque está vacío.');
@@ -94,7 +94,7 @@ Regresa el siguiente JSON de acuerdo a tu evaluación
         return `${key}: ${label}. ${value.comment || ''}`;
       });
 
-      this.dialog.open(AswaDialogComponent, {
+      this.dialog.open(AsvaDialogComponent, {
         data: {
           comentarios
         }
@@ -104,7 +104,7 @@ Regresa el siguiente JSON de acuerdo a tu evaluación
       this.asvaImg = 'assets/asvatalking.webp';
       this.speakText(textoAVoz);
     } catch (error) {
-      this.speakText('Error al conectar con ASWA.');
+      this.speakText('Error al conectar con ASVA.');
     } finally {
       setTimeout(() => {
         this.asvaImg = 'assets/asva.png';
