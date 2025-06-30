@@ -110,5 +110,11 @@ export class CasoPracticoService {
     );
   }
 
+  sendForReview(practicalCaseId: string, body: any): Observable<any> {
+    const url = `${this.API_URL}/api/practicalcase/${practicalCaseId}/review`;
+    return this.http.post(url, body, { headers: this.headers });
+  }
+
+
 
 }

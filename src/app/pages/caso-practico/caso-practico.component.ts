@@ -217,4 +217,17 @@ export class CasoPracticoComponent implements OnInit {
     }
     return section._id;
   }
+  solicitarRevisionGeneral(): void {
+    if (!this.practicalCase?._id || !this.practicalCase?.file) {
+      alert('Debes guardar primero el archivo antes de solicitar revisión.');
+      return;
+    }
+
+    this.casoPracticoService.sendForReview(this.practicalCase._id, { file: this.practicalCase.file })
+      .subscribe({
+        next: () => alert('Revisión general solicitada.'),
+        error: () => alert('Error al solicitar revisión.')
+      });
+  }
+
 }

@@ -108,7 +108,13 @@
 
   <div style="margin-top: 2rem;">
     <button mat-raised-button color="accent" (click)="viewPreview()">Vista previa</button>
+    <button mat-raised-button color="primary" (click)="solicitarRevisionGeneral()">
+      Solicitar revisión 
+    </button>
+
+  
   </div>
+  
 
   <div *ngIf="showPreview" style="margin-top: 2rem;">
     <mat-card>
